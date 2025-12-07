@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>KITT Voicebox Dashboard</title>
 <style>
-    html, body {
+  html, body {
     margin: 0;
     padding: 0;
     height: 100%;
@@ -13,9 +14,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
+  }
 
-#panel {
+  #panel {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     gap: 1vw;
@@ -28,15 +29,15 @@
     border: 0.5vw solid #440000;
     box-shadow: 0 0 3vw #000 inset, 0 0 2vw #400;
     position: relative;
-}
+  }
 
-.sideColumn {
+  .sideColumn {
     display: flex;
     flex-direction: column;
     gap: 1vh;
-}
+  }
 
-.lamp {
+  .lamp {
     padding: 0.5vh 0.5vw;
     text-align: center;
     font-size: 2vw;
@@ -45,10 +46,11 @@
     border: 0.2vw solid #550000;
     color: #f33;
     box-shadow: 0 0 0.5vw #000 inset;
-}
+    user-select: none;
+  }
 
-/* VOICE BOX */
-#voiceBox {
+  /* VOICE BOX */
+  #voiceBox {
     width: 100%;
     height: 40vh;
     background: linear-gradient(to bottom,#000,#222);
@@ -58,44 +60,44 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
+  }
 
-#voiceColumns {
+  #voiceColumns {
     display: flex;
     gap: 2vw;
     height: 100%;
     align-items: center;
-}
+  }
 
-.column {
+  .column {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 0.5vh;
-}
+  }
 
-.led {
+  .led {
     width: 100%;
     height: 1.5vh;
     background: #320000;
     border-radius: 0.3vh;
     transition: 0.05s;
-}
+  }
 
-.led.on {
+  .led.on {
     background: linear-gradient(45deg,#ff2a00,#ff6a00);
     box-shadow: 0 0 1vw #f50;
-}
+  }
 
-/* MODE BUTTONS */
-#modeStack {
+  /* MODE BUTTONS */
+  #modeStack {
     display: flex;
     flex-direction: column;
     gap: 1vh;
     margin-top: 1vh;
-}
+  }
 
-.modeBlock {
+  .modeBlock {
     padding: 1vh 0;
     font-size: 3vw;
     border-radius: 0.5vw;
@@ -106,20 +108,21 @@
     cursor: pointer;
     transition: opacity 0.15s, box-shadow 0.15s;
     color: #ffb000; /* amber */
-}
+    user-select: none;
+  }
 
-.modeBlock[data-mode="pursuit"] {
+  .modeBlock[data-mode="pursuit"] {
     color: #00bfff;
     border-color: #00bfff;
-}
+  }
 
-.modeBlock.active {
+  .modeBlock.active {
     opacity: 1;
     box-shadow: 0 0 1vw currentColor;
-}
+  }
 
-/* POWER BUTTON */
-#powerBtn {
+  /* POWER BUTTON */
+  #powerBtn {
     position: absolute;
     bottom: 1vh;
     right: 1vw;
@@ -134,164 +137,163 @@
     font-size: 4vw;
     cursor: pointer;
     transition: 0.2s;
-}
-#powerBtn:hover {
+    user-select: none;
+  }
+  #powerBtn:hover {
     background: #f00;
     color: #000;
-}
+  }
 
-/* Responsive text scaling for small screens */
-@media(max-width: 400px){
+  /* Responsive text scaling for small screens */
+  @media(max-width: 400px){
     .lamp, .modeBlock {
-        font-size: 3vw;
+      font-size: 3vw;
     }
     .led {
-        height: 1.2vh;
+      height: 1.2vh;
     }
-}
-
+  }
 </style>
 </head>
 <body>
 
 <div id="panel">
 
-    <!-- Left -->
-    <div class="sideColumn">
-        <div class="lamp">AIR</div>
-        <div class="lamp">OIL</div>
-        <div class="lamp">P1</div>
-        <div class="lamp">P2</div>
+  <!-- Left side lamps -->
+  <div class="sideColumn">
+    <div class="lamp">AIR</div>
+    <div class="lamp">OIL</div>
+    <div class="lamp">P1</div>
+    <div class="lamp">P2</div>
+  </div>
+
+  <!-- Center voicebox + modes -->
+  <div>
+    <div id="voiceBox">
+      <div id="voiceColumns"></div>
     </div>
 
-    <!-- Center -->
-    <div>
-        <div id="voiceBox">
-            <div id="voiceColumns"></div>
-        </div>
-
-        <div id="modeStack">
-            <div class="modeBlock modeBtn" data-mode="auto">AUTO CRUISE</div>
-            <div class="modeBlock modeBtn" data-mode="normal">NORMAL CRUISE</div>
-            <div class="modeBlock modeBtn" data-mode="pursuit">PURSUIT</div>
-        </div>
+    <div id="modeStack">
+      <div class="modeBlock modeBtn" data-mode="auto">AUTO CRUISE</div>
+      <div class="modeBlock modeBtn" data-mode="normal">NORMAL CRUISE</div>
+      <div class="modeBlock modeBtn" data-mode="pursuit">PURSUIT</div>
     </div>
+  </div>
 
-    <!-- Right -->
-    <div class="sideColumn">
-        <div class="lamp">S1</div>
-        <div class="lamp">S2</div>
-        <div class="lamp">P3</div>
-        <div class="lamp">P4</div>
-    </div>
+  <!-- Right side lamps -->
+  <div class="sideColumn">
+    <div class="lamp">S1</div>
+    <div class="lamp">S2</div>
+    <div class="lamp">P3</div>
+    <div class="lamp">P4</div>
+  </div>
 
-    <!-- Power -->
-    <button id="powerBtn">⏻</button>
+  <!-- Power button -->
+  <button id="powerBtn" aria-label="Power Button">⏻</button>
 
 </div>
 
 <script>
-/************* BUILD 3 VOICEBOX COLUMNS *************/
-const voiceColumns = document.getElementById("voiceColumns");
-let voiceLEDs = [[], [], []];
+  // Build the voicebox LEDs
+  const voiceColumns = document.getElementById("voiceColumns");
+  let voiceLEDs = [[], [], []];
 
-for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 3; i++) {
     const col = document.createElement("div");
     col.className = "column";
-
     for (let j = 0; j < 20; j++) {
-        const led = document.createElement("div");
-        led.className = "led";
-        col.appendChild(led);
-        voiceLEDs[i].push(led);
+      const led = document.createElement("div");
+      led.className = "led";
+      col.appendChild(led);
+      voiceLEDs[i].push(led);
     }
     voiceColumns.appendChild(col);
-}
+  }
 
-/************** MODE BUTTON LOGIC **************/
-const modeButtons = document.querySelectorAll('.modeBtn');
-document.querySelector('[data-mode="auto"]').classList.add("active");
+  // Mode button logic: only one active at a time
+  const modeButtons = document.querySelectorAll('.modeBtn');
+  document.querySelector('[data-mode="auto"]').classList.add("active");
 
-modeButtons.forEach(btn => {
+  modeButtons.forEach(btn => {
     btn.addEventListener("click", () => {
-        modeButtons.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
+      modeButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
     });
-});
+  });
 
-/************** POWER / MICROPHONE **************/
-let powerOn = false;
-let lagL = 0, lagR = 0;
-let peak = [0, 0, 0];
+  // Power button & mic audio logic
+  let powerOn = false;
+  let lagL = 0, lagR = 0;
+  let peak = [0, 0, 0];
 
-document.getElementById("powerBtn").addEventListener("click", () => {
+  document.getElementById("powerBtn").addEventListener("click", () => {
     if (!powerOn) {
-        powerOn = true;
-        startAudio();
+      powerOn = true;
+      startAudio();
     }
-});
+  });
 
-/************** KITT VOICEBOX ENGINE **************/
-async function startAudio() {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const audio = new AudioContext();
-    const src = audio.createMediaStreamSource(stream);
-    const analyser = audio.createAnalyser();
-    analyser.fftSize = 1024;
-    src.connect(analyser);
-    const data = new Uint8Array(analyser.fftSize);
+  async function startAudio() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const audio = new AudioContext();
+      const src = audio.createMediaStreamSource(stream);
+      const analyser = audio.createAnalyser();
+      analyser.fftSize = 1024;
+      src.connect(analyser);
+      const data = new Uint8Array(analyser.fftSize);
 
-    function loop() {
+      function loop() {
         requestAnimationFrame(loop);
         analyser.getByteTimeDomainData(data);
 
         let sum = 0;
         for (let i = 0; i < data.length; i++) {
-            sum += Math.abs((data[i] - 128) / 128);
+          sum += Math.abs((data[i] - 128) / 128);
         }
 
-        // base amplitude
         let amp = sum / data.length;
-
-        // nonlinear "snappy" response
         amp = Math.pow(amp, 0.55) * 1.8;
         amp = Math.min(1, amp + Math.random() * 0.02);
 
         const center = amp;
 
-        // symmetrical lagging outer columns
         lagL = lagL * 0.78 + center * 0.22;
         lagR = lagR * 0.78 + center * 0.22;
 
         const wobble = (Math.random() * 0.03) - 0.015;
-        const left  = Math.min(1, lagL + wobble);
+        const left = Math.min(1, lagL + wobble);
         const right = Math.min(1, lagR + wobble);
 
         const levels = [left, center, right];
 
         for (let c = 0; c < 3; c++) {
-            const col = voiceLEDs[c];
-            const total = col.length;
-            const mid = Math.floor(total / 2);
+          const col = voiceLEDs[c];
+          const total = col.length;
+          const mid = Math.floor(total / 2);
 
-            peak[c] = Math.max(peak[c], levels[c]);
-            peak[c] -= 0.02;
-            if (peak[c] < levels[c]) peak[c] = levels[c];
-            if (peak[c] < 0) peak[c] = 0;
+          peak[c] = Math.max(peak[c], levels[c]);
+          peak[c] -= 0.02;
+          if (peak[c] < levels[c]) peak[c] = levels[c];
+          if (peak[c] < 0) peak[c] = 0;
 
-            const span = Math.floor(peak[c] * mid);
+          const span = Math.floor(peak[c] * mid);
 
-            col.forEach((led, i) => {
-                const d = Math.abs(i - mid);
-                if (d <= span) led.classList.add("on");
-                else led.classList.remove("on");
-            });
+          col.forEach((led, i) => {
+            const d = Math.abs(i - mid);
+            if (d <= span) led.classList.add("on");
+            else led.classList.remove("on");
+          });
         }
-    }
+      }
 
-    loop();
-}
+      loop();
+    } catch (err) {
+      alert("Microphone access denied or not available.");
+      powerOn = false;
+    }
+  }
 </script>
+
 </body>
 </html>
-
