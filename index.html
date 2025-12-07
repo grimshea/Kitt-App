@@ -4,125 +4,152 @@
 <meta charset="UTF-8">
 <title>KITT Voicebox Dashboard</title>
 <style>
-    body {
-        background: #000;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #f00;
-        font-family: 'Orbitron', sans-serif;
-        user-select: none;
-    }
+    html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: linear-gradient(180deg,#000 0%,#111 100%);
+    font-family: 'Orbitron', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    #panel {
-        display: grid;
-        grid-template-columns: 120px auto 120px;
-        gap: 20px;
-        background: #111;
-        padding: 20px;
-        border: 4px solid #400;
-        border-radius: 12px;
-        position: relative;
-    }
+#panel {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 1vw;
+    width: 95vw;
+    max-width: 600px;
+    height: 90vh;
+    background: linear-gradient(135deg,#222 0%,#111 100%);
+    padding: 2vw;
+    border-radius: 1vw;
+    border: 0.5vw solid #440000;
+    box-shadow: 0 0 3vw #000 inset, 0 0 2vw #400;
+    position: relative;
+}
 
-    .sideColumn {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
+.sideColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
 
-    .lamp {
-        padding: 8px;
-        text-align: center;
-        font-size: 14px;
-        background: #300;
-        border: 2px solid #600;
-        color: #f33;
-    }
+.lamp {
+    padding: 0.5vh 0.5vw;
+    text-align: center;
+    font-size: 2vw;
+    background: #220000;
+    border-radius: 0.3vw;
+    border: 0.2vw solid #550000;
+    color: #f33;
+    box-shadow: 0 0 0.5vw #000 inset;
+}
 
-    /* VOICE BOX */
-    #voiceBox {
-        width: 220px;
-        height: 180px;
-        background: #000;
-        border: 4px solid #700;
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 10px;
-    }
+/* VOICE BOX */
+#voiceBox {
+    width: 100%;
+    height: 40vh;
+    background: linear-gradient(to bottom,#000,#222);
+    border-radius: 0.5vw;
+    border: 0.3vw solid #770000;
+    padding: 1vh 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    #voiceColumns {
-        display: flex;
-        gap: 20px;
-        height: 100%;
-        align-items: center;
-    }
+#voiceColumns {
+    display: flex;
+    gap: 2vw;
+    height: 100%;
+    align-items: center;
+}
 
-    .column {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 4px;
-    }
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5vh;
+}
 
+.led {
+    width: 100%;
+    height: 1.5vh;
+    background: #320000;
+    border-radius: 0.3vh;
+    transition: 0.05s;
+}
+
+.led.on {
+    background: linear-gradient(45deg,#ff2a00,#ff6a00);
+    box-shadow: 0 0 1vw #f50;
+}
+
+/* MODE BUTTONS */
+#modeStack {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    margin-top: 1vh;
+}
+
+.modeBlock {
+    padding: 1vh 0;
+    font-size: 3vw;
+    border-radius: 0.5vw;
+    border: 0.2vw solid #900;
+    text-align: center;
+    letter-spacing: 0.1vw;
+    opacity: 0.35;
+    cursor: pointer;
+    transition: opacity 0.15s, box-shadow 0.15s;
+    color: #ffb000; /* amber */
+}
+
+.modeBlock[data-mode="pursuit"] {
+    color: #00bfff;
+    border-color: #00bfff;
+}
+
+.modeBlock.active {
+    opacity: 1;
+    box-shadow: 0 0 1vw currentColor;
+}
+
+/* POWER BUTTON */
+#powerBtn {
+    position: absolute;
+    bottom: 1vh;
+    right: 1vw;
+    width: 8vw;
+    max-width: 50px;
+    height: 8vw;
+    max-height: 50px;
+    border-radius: 50%;
+    background: #111;
+    border: 0.2vw solid #f00;
+    color: #f00;
+    font-size: 4vw;
+    cursor: pointer;
+    transition: 0.2s;
+}
+#powerBtn:hover {
+    background: #f00;
+    color: #000;
+}
+
+/* Responsive text scaling for small screens */
+@media(max-width: 400px){
+    .lamp, .modeBlock {
+        font-size: 3vw;
+    }
     .led {
-        width: 20px;
-        height: 6px;
-        background: #320000;
-        transition: 0.05s;
+        height: 1.2vh;
     }
+}
 
-    .led.on {
-        background: #ff2a00;
-        box-shadow: 0 0 10px #f00;
-    }
-
-    /* CRUISE MODES */
-    #modeStack {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        width: 220px;
-    }
-
-    .modeBlock {
-        padding: 10px;
-        font-size: 14px;
-        border: 2px solid #900;
-        text-align: center;
-        letter-spacing: 1px;
-        opacity: 0.35;
-        cursor: pointer;
-        transition: opacity 0.15s, box-shadow 0.15s;
-    }
-
-    .modeBlock.active {
-        opacity: 1;
-        box-shadow: 0 0 12px currentColor;
-    }
-
-    /* POWER BUTTON */
-    #powerBtn {
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        background: #111;
-        border: 2px solid #f00;
-        color: #f00;
-        font-size: 20px;
-        cursor: pointer;
-        transition: 0.2s;
-    }
-    #powerBtn:hover {
-        background: #f00;
-        color: #000;
-    }
 </style>
 </head>
 <body>
@@ -267,3 +294,4 @@ async function startAudio() {
 </script>
 </body>
 </html>
+
