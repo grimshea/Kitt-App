@@ -6,129 +6,177 @@
 <title>KITT Voicebox Dashboard</title>
 <style>
     body {
-        background: #000;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #f00;
-        font-family: 'Orbitron', sans-serif;
-        user-select: none;
-    }
+    background: #000;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #f00;
+    font-family: 'Orbitron', sans-serif;
+    user-select: none;
+}
 
-    #panel {
-        display: grid;
-        grid-template-columns: 120px auto 120px;
-        gap: 20px;
-        background: #111;
-        padding: 20px;
-        border: 4px solid #400;
-        border-radius: 12px;
-        position: relative;
-    }
+/* PANEL WRAPPER (added for scaling) */
+#wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
 
-    .sideColumn {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
+/* PANEL */
+#panel {
+    display: grid;
+    grid-template-columns: 120px auto 120px;
+    gap: 20px;
+    background: #111;
+    padding: 22px 26px;
+    border: 4px solid #550000;
+    border-radius: 14px;
+    transform-origin: center;
 
-    .lamp {
-        padding: 8px;
-        text-align: center;
-        font-size: 14px;
-        background: #300;
-        border: 2px solid #600;
-        color: #f33;
-    }
+    /* Subtle outer glow that matched earlier tests */
+    box-shadow: 0 0 20px #200, inset 0 0 10px #200;
+}
 
-    /* VOICE BOX */
-    #voiceBox {
-        width: 220px;
-        height: 180px;
-        background: #000;
-        border: 4px solid #700;
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 10px;
-    }
+/* SIDE LAMPS */
+.sideColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
-    #voiceColumns {
-        display: flex;
-        gap: 20px;
-        height: 100%;
-        align-items: center;
-    }
+.lamp {
+    padding: 8px;
+    text-align: center;
+    font-size: 14px;
+    background: #210000;
+    border: 2px solid #600;
+    color: #ff3b3b;
+    letter-spacing: 1px;
 
-    .column {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 4px;
-    }
+    /* Subtle recessed look like the real panel lamp boxes */
+    box-shadow: inset 0 0 6px #000;
+}
 
-    .led {
-        width: 20px;
-        height: 6px;
-        background: #320000;
-        transition: 0.05s;
-    }
+/* Lamps always on */
+.lamp.on {
+    background: #5a0000;
+    color: #ff6666;
+    box-shadow: 
+        0 0 14px #ff0000,
+        0 0 30px #ff2200,
+        inset 0 0 6px #000;
+}
 
-    .led.on {
-        background: #ff2a00;
-        box-shadow: 0 0 10px #f00;
-    }
+/* VOICEBOX */
+#voiceBox {
+    width: 240px;
+    height: 200px;
+    background: #000;
+    border: 4px solid #770000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    box-shadow: 0 0 14px #200 inset;
+}
 
-    /* CRUISE MODES */
-    #modeStack {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        width: 220px;
-    }
+/* COLUMNS */
+#voiceColumns {
+    display: flex;
+    gap: 18px;
+    height: 100%;
+    align-items: center;
+}
 
-    .modeBlock {
-        padding: 10px;
-        font-size: 14px;
-        border: 2px solid #900;
-        text-align: center;
-        letter-spacing: 1px;
-        opacity: 0.35;
-        cursor: pointer;
-        transition: opacity 0.15s, box-shadow 0.15s;
-    }
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
 
-    .modeBlock.active {
-        opacity: 1;
-        box-shadow: 0 0 12px currentColor;
-    }
+/* LEDs */
+.led {
+    width: 22px;
+    height: 7px;
+    background: #2b0000;
+    transition: background 0.04s, box-shadow 0.04s;
+    border-radius: 2px;
+}
 
-    /* POWER BUTTON */
-    #powerBtn {
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        background: #111;
-        border: 2px solid #f00;
-        color: #f00;
-        font-size: 20px;
-        cursor: pointer;
-        transition: 0.2s;
-    }
-    #powerBtn:hover {
-        background: #f00;
-        color: #000;
-    }
+.led.on {
+    background: #ff1e00;
+    box-shadow:
+        0 0 6px #ff2000,
+        0 0 14px #ff2000;
+}
+
+/* MODE BUTTONS */
+#modeStack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 240px;
+    margin-top: 4px;
+}
+
+.modeBlock {
+    padding: 12px 10px;
+    font-size: 14px;
+    border: 2px solid #900;
+    text-align: center;
+    letter-spacing: 2px;
+    color: #ff4444;
+    background: #1a0000;
+
+    opacity: 0.35;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modeBlock.active {
+    opacity: 1;
+    color: #ff5555;
+    border-color: #f00;
+    box-shadow:
+        0 0 14px #f00,
+        inset 0 0 6px #400;
+}
+
+/* POWER BUTTON */
+#powerBtn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #120000;
+    border: 2px solid #f00;
+    color: #f00;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: inset 0 0 10px #300;
+}
+
+#powerBtn:hover {
+    background: #ff0000;
+    color: #000;
+    box-shadow: 0 0 14px #f00;
+}
+
 </style>
 </head>
 <body>
 
-<div id="panel">
+<div id="wrapper">
+    <div id="panel">
 
     <!-- Left -->
     <div class="sideColumn">
@@ -161,7 +209,8 @@
 
     <!-- Power -->
     <button id="powerBtn">⏻</button>
-
+        
+    </div>
 </div>
 
 <script>
@@ -192,6 +241,34 @@ modeButtons.forEach(btn => {
         btn.classList.add("active");
     });
 });
+    // Turn all lamps on
+const lamps = document.querySelectorAll('.lamp');
+lamps.forEach(l => l.classList.add('on'));
+
+    /************** RESPONSIVE SCALING **************/
+function scalePanel() {
+    const panel = document.getElementById("panel");
+    const wrapper = document.getElementById("wrapper");
+
+    // panel’s natural size (desktop)
+    const naturalWidth = 480;   // approx width of your full panel
+    const naturalHeight = 360;  // approx height
+
+    // available space
+    const scaleX = wrapper.clientWidth / naturalWidth;
+    const scaleY = wrapper.clientHeight / naturalHeight;
+
+    // choose the smaller scale to fit both directions
+    const scale = Math.min(scaleX, scaleY);
+
+    panel.style.transform = `scale(${scale})`;
+}
+
+// run and update
+window.addEventListener("resize", scalePanel);
+window.addEventListener("load", scalePanel);
+
+
 
 /************** POWER / MICROPHONE **************/
 let powerOn = false;
@@ -268,3 +345,4 @@ async function startAudio() {
 </script>
 </body>
 </html>
+
